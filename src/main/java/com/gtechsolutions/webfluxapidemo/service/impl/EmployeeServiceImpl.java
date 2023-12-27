@@ -20,6 +20,7 @@ import javax.xml.validation.Validator;
 @Slf4j
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
+    public static final String URL_EMPLOYEES = "http://localhost:8081/api/v1/employees/";
     private final EmployeeRepository employeeRepository;
 
     private Validator validator;
@@ -42,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(savedEmployee -> ResponseEntity
                         .status(HttpStatus.CREATED)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Location", "http://localhost:8081/api/v1/employees/" + savedEmployee.getId())
+                        .header("Location", URL_EMPLOYEES + savedEmployee.getId())
                         .body(EmployeeMapper.fromEmployee(savedEmployee)))
                 .doOnError(error -> log.error("Error occurred while saving employee", error))
                 .onErrorReturn(ResponseEntity.badRequest().build())
@@ -61,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 })
                 .map(savedEmployee -> ResponseEntity.status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Location", "http://localhost:8081/api/v1/employees/" + savedEmployee.getId())
+                        .header("Location", URL_EMPLOYEES + savedEmployee.getId())
                         .body(EmployeeMapper.fromEmployee(savedEmployee)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
                 .log();
@@ -76,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .flatMap(foundedEmployee -> Mono.just(ResponseEntity
                         .status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Location", "http://localhost:8081/api/v1/employees/" + foundedEmployee.getId())
+                        .header("Location", URL_EMPLOYEES + foundedEmployee.getId())
                         .body(EmployeeMapper.fromEmployee(foundedEmployee))))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
                 .log();
@@ -99,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Mono<ResponseEntity<Void>> deleteEmployee(String employeeId) {
         return this.employeeRepository.findById(employeeId)
                 .flatMap(foundEmployee -> employeeRepository.deleteById(foundEmployee.getId())
-                        .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT))))
+                                .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT))))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
                 .log();
     }
