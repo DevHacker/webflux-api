@@ -1,0 +1,24 @@
+server:
+  port: 8081
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: user-management-service
+  webflux:
+    base-path: /api/v1/employees
+
+  profiles:
+    active: dev
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - dev
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ems
