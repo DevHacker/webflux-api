@@ -1,8 +1,6 @@
 
-k
-java:S1192."IDefine a constant instead of duplicating this literal "Location" 3 times.(Ç§íıÿÿÿÿ8©™¯ÓÊ1
-]	java:S125l"<This block of commented-out lines of code should be removed.(¨çÇşÿÿÿÿ8¤›¯ÓÊ1
-X	java:S125w"<This block of commented-out lines of code should be removed.( Ä˜Å8¦›¯ÓÊ1
-]	java:S125|"<This block of commented-out lines of code should be removed.(Ü¹¤ùÿÿÿÿ8§›¯ÓÊ1
+]	java:S125m"<This block of commented-out lines of code should be removed.(¨çÇşÿÿÿÿ8¤›¯ÓÊ1
+X	java:S125x"<This block of commented-out lines of code should be removed.( Ä˜Å8¦›¯ÓÊ1
+]	java:S125}"<This block of commented-out lines of code should be removed.(Ü¹¤ùÿÿÿÿ8§›¯ÓÊ1
 J
-java:S1068"-Remove this unused "validator" private field.(™­£Ü8©›¯ÓÊ1
+java:S1068"-Remove this unused "validator" private field.(™­£Ü8©›¯ÓÊ1

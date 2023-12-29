@@ -21,6 +21,7 @@ import javax.xml.validation.Validator;
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     public static final String API_URL = "http://localhost:8081/api/v1/employees/";
+    public static final String HEADER_NAME = "Location";
     private final EmployeeRepository employeeRepository;
 
     private Validator validator;
@@ -43,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(savedEmployee -> ResponseEntity
                         .status(HttpStatus.CREATED)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Location", API_URL + savedEmployee.getId())
+                        .header(HEADER_NAME, API_URL + savedEmployee.getId())
                         .body(EmployeeMapper.fromEmployee(savedEmployee)))
                 .doOnError(error -> log.error("Error occurred while saving employee", error))
                 .onErrorReturn(ResponseEntity.badRequest().build())
@@ -62,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 })
                 .map(savedEmployee -> ResponseEntity.status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Location", API_URL + savedEmployee.getId())
+                        .header(HEADER_NAME, API_URL + savedEmployee.getId())
                         .body(EmployeeMapper.fromEmployee(savedEmployee)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
                 .log();
@@ -77,7 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .flatMap(foundedEmployee -> Mono.just(ResponseEntity
                         .status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Location", API_URL + foundedEmployee.getId())
+                        .header(HEADER_NAME, API_URL + foundedEmployee.getId())
                         .body(EmployeeMapper.fromEmployee(foundedEmployee))))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
                 .log();
